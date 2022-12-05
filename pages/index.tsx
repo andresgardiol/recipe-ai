@@ -1,10 +1,12 @@
 import Head from 'next/head'
 import styles from '../styles/Home.module.css'
-import {Autocomplete, Button, CircularProgress, TextField} from "@mui/material";
+import {Autocomplete, Button, CircularProgress, Fab, Grid, TextField} from "@mui/material";
 import React, {useRef} from "react";
-import RecipeService from "../services/recipe-service";
+import RecipeService, {MeasureSystem, PromptLanguage} from "../services/recipe-service";
 import RecipeCard from "../components/recipe-card";
 import {Box} from "@mui/system";
+import LanguageSelect from "../components/language-select";
+import MeasureSystemSelect from "../components/measure-system-select";
 
 const recipeService = new RecipeService();
 
@@ -26,6 +28,14 @@ export default function Home() {
         setIsLoading(false);
     }
 
+    const handleLanguageChange = (lan: string) => {
+        recipeService.changeLanguage(lan as PromptLanguage);
+    }
+
+    const handleMeasureSystemChange = (system: string) => {
+        recipeService.changeMeasureSystem(system as MeasureSystem);
+    }
+
     return (
         <div className={styles.container}>
             <Head>
@@ -33,6 +43,16 @@ export default function Home() {
                 <meta name="description" content="Search for recipes using AI"/>
                 <link rel="icon" href="/favicon.ico"/>
             </Head>
+
+            <Grid container className="options" direction="row" alignItems="center" justifyContent="center">
+                <Grid item xs={2} className="option-item">
+                    <LanguageSelect onLanguageChange={handleLanguageChange}/>
+                </Grid>
+                <Grid item xs={2}>
+                    <MeasureSystemSelect onMeasureSystemChange={handleMeasureSystemChange}/>
+                </Grid>
+            </Grid>
+
 
             <main className={styles.main}>
                 <h2>Search for a food recipe:</h2>

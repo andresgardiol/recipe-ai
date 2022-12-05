@@ -28,12 +28,31 @@ export default class RecipeService {
     }
 
     createRecipePrompt(meal: string): string {
-        const prompt = promptSettings.promptTemplate.replace('%food%', meal).replace('%measure%', promptSettings.measureSystem);
-        return prompt;
+        let promptTemplate: string;
+        if (promptSettings.language === 'english') {
+            promptTemplate = promptSettings.promptTemplate.english;
+        } else {
+            promptTemplate = promptSettings.promptTemplate.spanish;
+        }
+        return promptTemplate.replace('%food%', meal).replace('%measure%', promptSettings.measureSystem);
+    }
+
+    changeMeasureSystem(system: MeasureSystem) {
+        promptSettings.measureSystem = system;
+    }
+
+    changeLanguage(language: PromptLanguage) {
+        promptSettings.language = language;
     }
 }
+export type PromptLanguage = 'english' | 'spanish';
+export type MeasureSystem = 'metric' | 'imperial';
 
 const promptSettings = {
-    promptTemplate: 'Write a recipe for: %food%. Put a title at the top. Then, list the ingredients first and then the steps. If any, include notes at the bottom. No greetings, goodbyes or introductory text. Use %measure% system. Friendly tone.',
+    promptTemplate: {
+        english: 'Write a recipe for: %food%. Put a title at the top. Then, list the ingredients first and then the steps. If any, include notes at the bottom. No greetings, goodbyes or introductory text. Use %measure% system. Friendly tone.',
+        spanish: 'Escribe una receta para: %food%. Pon un título arriba. Luego, lista los ingredientes primero y luego los pasos. Si es necesario, incluye notas al final. Sin saludos, despedidas o texto introductorio. Usa el sistema %measure%. Tono amigable.',
+    },
     measureSystem: 'metric',
-}
+    language: 'english'
+};

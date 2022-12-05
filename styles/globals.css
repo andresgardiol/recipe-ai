@@ -23,3 +23,11 @@ a {
 .submit-meal {
   margin: 20px 0;
 }
+
+.options {
+  padding: 20px 0;
+}
+
+.option-item{
+  text-align: center;
+}
