@@ -16,7 +16,8 @@ export default class RecipeService {
     ];
 
     async getRecipe(prompt: string): Promise<string> {
-        const response = await fetch(`http://localhost:5001/api/chat?prompt=${prompt}`);
+        const baseURL = `http://localhost:5001/api/chat`;
+        const response = await fetch(`${baseURL}?prompt=${prompt}`);
         let res = response.text();
         console.log(res);
         return res;

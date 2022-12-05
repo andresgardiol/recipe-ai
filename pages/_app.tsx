@@ -1,6 +1,6 @@
 import '../styles/globals.css'
 import type { AppProps } from 'next/app'
-import RecipeService from "../services/recipe";
+import RecipeService from "../services/recipe-service";
 
 const recipeService = new RecipeService();
 

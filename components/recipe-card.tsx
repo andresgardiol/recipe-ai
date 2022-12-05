@@ -8,9 +8,18 @@ type Props = {
 
 export default function RecipeCard(props: Props) {
     return (
-        <>
-            <h1>{props.recipeName}</h1>
-            <div dangerouslySetInnerHTML={{ __html: props.recipeHTML }} />
-        </>
+
+        <Card sx={{maxWidth: 345}}>
+            <CardContent>
+                <Typography gutterBottom variant="h5" component="div">
+                    {props.recipeName}
+                </Typography>
+                    <div dangerouslySetInnerHTML={{__html: props.recipeHTML}}/>
+            </CardContent>
+            <CardActions>
+                <Button size="small">Share</Button>
+                <Button size="small">Learn More</Button>
+            </CardActions>
+        </Card>
     );
 }

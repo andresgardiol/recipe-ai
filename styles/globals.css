@@ -15,12 +15,11 @@ a {
   box-sizing: border-box;
 }
 
-@media (prefers-color-scheme: dark) {
-  html {
-    color-scheme: dark;
-  }
-  body {
-    color: white;
-    background: #043cc5;
-  }
+
+.meal-form {
+  text-align: center;
+}
+
+.submit-meal {
+  margin: 20px 0;
 }
