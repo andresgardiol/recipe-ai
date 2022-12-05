@@ -12,6 +12,7 @@ const recipeService = new RecipeService();
 
 export default function Home() {
     const inputRef = useRef<HTMLInputElement>(null);
+    const [meal, setMeal] = React.useState('');
     const [recipe, setRecipe] = React.useState<string>('');
     const [isLoading, setIsLoading] = React.useState<boolean>(false);
 
@@ -20,6 +21,7 @@ export default function Home() {
         setIsLoading(true);
         event.preventDefault();
         const meal = inputRef.current!.value;
+        setMeal(meal);
         console.log("Selected meal: " + meal);
         const prompt = recipeService.createRecipePrompt(meal);
         const recipe = await recipeService.getRecipe(prompt);
@@ -45,41 +47,56 @@ export default function Home() {
             </Head>
 
             <Grid container className="options" direction="row" alignItems="center" justifyContent="center">
-                <Grid item xs={2} className="option-item">
+                <Grid item xs={6} md={4} lg={2} className="option-item">
                     <LanguageSelect onLanguageChange={handleLanguageChange}/>
                 </Grid>
-                <Grid item xs={2}>
+                <Grid item xs={6} md={4} lg={2} className="option-item">
                     <MeasureSystemSelect onMeasureSystemChange={handleMeasureSystemChange}/>
                 </Grid>
             </Grid>
 
-
             <main className={styles.main}>
-                <h2>Search for a food recipe:</h2>
+                <Grid className={recipe? '' : styles.maingrid} container direction="column" alignItems="center" justifyContent="flex-start">
 
-                <form onSubmit={handleSubmit} className="meal-form">
-                    <Autocomplete
-                        disablePortal
-                        id="combo-box-demo"
-                        options={recipeService.getMeals()}
-                        sx={{width: 300}}
-                        renderInput={(params) =>
-                            <TextField
-                                name="meal"
-                                type="text"
-                                inputRef={inputRef}
-                                required
-                                {...params}
-                                label="Type to start searching"/>}
-                    />
+                    <Grid item>
+                        <h2>Search for a food recipe:</h2>
+                        <form onSubmit={handleSubmit} className="meal-form">
+                            <Autocomplete
+                                disablePortal
+                                id="combo-box-demo"
+                                options={recipeService.getMeals()}
+                                sx={{width: 300}}
+                                renderInput={(params) =>
+                                    <TextField
+                                        name="meal"
+                                        type="text"
+                                        inputRef={inputRef}
+                                        required
+                                        {...params}
+                                        label="Type to start searching"/>}
+                            />
+                            <Button className="submit-meal" type="submit" variant="contained">Get Recipe</Button>
+                        </form>
 
-                    <Button className="submit-meal" type="submit" variant="contained">Get a Recipe</Button>
-                </form>
-                {recipe && <RecipeCard recipeHTML={recipe} recipeImage={'pepe'} recipeName={inputRef.current!.value}/>}
-                {(!recipe && isLoading) &&
-                    (<Box sx={{display: 'flex'}}>
-                        <CircularProgress/>
-                    </Box>)}
+                    </Grid>
+                    <Grid item xs={2}>
+
+                        {recipe && <RecipeCard recipeHTML={recipe} recipeImage={'pepe'} recipeName={meal}/>}
+
+                        {(!recipe && isLoading) && (
+                            <Box sx={{display: 'flex'}}>
+                                <CircularProgress/>
+                            </Box>
+                        )}
+
+                        {(!recipe && !isLoading) && (
+                            <Box sx={{display: 'flex'}}>
+                                <h3>Search for a recipe to start </h3>
+                            </Box>
+                        )}
+
+                    </Grid>
+                </Grid>
             </main>
         </div>
     )

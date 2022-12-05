@@ -7,18 +7,27 @@ type Props = {
 }
 
 export default function RecipeCard(props: Props) {
+    function handleOnClick() {
+        navigator.clipboard.writeText(props.recipeHTML)
+            .then(() => {
+                console.log('Copied to clipboard');
+            })
+            .catch(err => {
+                console.log('Error copying to clipboard: ', err);
+            });
+    }
+
     return (
 
-        <Card sx={{maxWidth: 345}}>
+        <Card raised sx={{maxWidth: 500}} className="recipe-card">
             <CardContent>
                 <Typography gutterBottom variant="h5" component="div">
                     {props.recipeName}
                 </Typography>
                     <div dangerouslySetInnerHTML={{__html: props.recipeHTML}}/>
             </CardContent>
-            <CardActions>
-                <Button size="small">Share</Button>
-                <Button size="small">Learn More</Button>
+            <CardActions className="recipe-actions">
+                <Button onClick={handleOnClick} variant="outlined" size="small">Copy</Button>
             </CardActions>
         </Card>
     );

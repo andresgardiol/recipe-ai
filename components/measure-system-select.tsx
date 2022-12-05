@@ -21,7 +21,7 @@ export default function MeasureSystemSelect(props: Props) {
     return (
         <Box sx={{minWidth: 120}}>
     <FormControl >
-    <InputLabel id="demo-simple-select-label">Measure System</InputLabel>
+    <InputLabel id="demo-simple-select-label">System</InputLabel>
         <Select
     labelId="demo-simple-select-label"
     id="demo-simple-select"

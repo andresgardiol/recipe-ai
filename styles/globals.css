@@ -31,3 +31,12 @@ a {
 .option-item{
   text-align: center;
 }
+
+.recipe-card{
+  margin: 20px 0;
+}
+
+.recipe-actions{
+  width: 120px;
+  margin: 0px auto;
+}
